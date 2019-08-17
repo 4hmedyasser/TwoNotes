@@ -1,6 +1,6 @@
 import os
 import sys
-import design
+import TwoNotes
 from datetime import datetime
 from PyQt4 import QtGui
 
