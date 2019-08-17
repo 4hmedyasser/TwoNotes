@@ -1,8 +1,12 @@
 import os
+import sys
+import design
 from datetime import datetime
+from PyQt4 import QtGui
 
 
-path = "/home/user/openNotes/Notes/"
+path = "./Notes/"
+trash = "./.Trash/"
 
 
 def takeNote():
@@ -18,7 +22,7 @@ def takeNote():
     print "Note Saved successfully!\n"
 
 def listNotes():
-    print os.listdir("/home/user/openNotes/Notes/")
+    print os.listdir(path)
     print("\n")
 
 def viewNote():
@@ -60,7 +64,6 @@ def removeNote():
     os.remove(delete_this)
     print "Note Removed successfully!\n"
 
-print "Welcome to openNotes!\n\n"
 choice = None
 
 while choice != "EXIT":
