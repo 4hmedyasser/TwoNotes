@@ -8,6 +8,19 @@ from PyQt4 import QtGui
 path = "./Notes/"
 trash = "./.Trash/"
 
+class TwoNotes(QtGui.QMainWindow, TwoNotes.ui_MainWindow):
+	def __init__(self, parent=None):
+		super(TwoNotes, self).__init__(parent)
+		self.setupUi(self)
+
+def main():
+	app = QtGui.QApplication(sys.argv)
+	form = TwoNotes()
+	form.show()
+	app.exec_()
+	
+if __name__ == '__main__':
+	main()
 
 def takeNote():
     title = raw_input("Enter Note's Title\n\n>")

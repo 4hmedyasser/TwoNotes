@@ -1,139 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>TwoNotes</class>
- <widget class="QTabWidget" name="TwoNotes">
+ <widget class="QMainWindow" name="TwoNotes">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>361</width>
-    <height>369</height>
+    <width>362</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>TwoNotes</string>
+   <string>MainWindow</string>
   </property>
-  <property name="currentIndex">
-   <number>0</number>
-  </property>
-  <widget class="QWidget" name="QuickNotes">
-   <attribute name="title">
-    <string>Quick Notes</string>
-   </attribute>
-   <widget class="QPlainTextEdit" name="Note">
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>331</width>
-      <height>261</height>
+      <x>0</x>
+      <y>0</y>
+      <width>361</width>
+      <height>361</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QPushButton" name="Save">
-    <property name="geometry">
-     <rect>
-      <x>15</x>
-      <y>290</y>
-      <width>161</width>
-      <height>28</height>
-     </rect>
+    <property name="currentIndex">
+     <number>1</number>
     </property>
-    <property name="text">
-     <string>Save</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Clear">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>290</y>
-      <width>161</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="Editor">
-   <attribute name="title">
-    <string>Editor</string>
-   </attribute>
-   <widget class="QTableView" name="AllNotes">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>331</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="SaveEdit">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>331</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Save</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="EditNote">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>164</y>
-      <width>331</width>
-      <height>111</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QWidget" name="Trash">
-   <attribute name="title">
-    <string>Trash</string>
-   </attribute>
-   <widget class="QTableView" name="TrashNotes">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>331</width>
-      <height>271</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Delete">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>300</y>
-      <width>161</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="Restore">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>161</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Restore</string>
-    </property>
+    <widget class="QWidget" name="Notes">
+     <attribute name="title">
+      <string>Notes</string>
+     </attribute>
+     <widget class="QPushButton" name="Clear">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>300</y>
+        <width>161</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="Note">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>331</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Save">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>300</y>
+        <width>161</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Editor">
+     <attribute name="title">
+      <string>Editor</string>
+     </attribute>
+     <widget class="QTextEdit" name="EditNote">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>331</width>
+        <height>121</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTableView" name="AllNotes">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>331</width>
+        <height>131</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SaveEdit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>300</y>
+        <width>331</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Trash">
+     <attribute name="title">
+      <string>Trash</string>
+     </attribute>
+     <widget class="QTableView" name="TrashNotes">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>331</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Restore">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>300</y>
+        <width>161</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Restore</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Delete">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>300</y>
+        <width>161</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Delete</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
