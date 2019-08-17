@@ -70,7 +70,7 @@ class Ui_TwoNotes(object):
         TwoNotes.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(TwoNotes)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(TwoNotes)
 
     def retranslateUi(self, TwoNotes):

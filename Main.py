@@ -8,7 +8,7 @@ from PyQt4 import QtGui
 path = "./Notes/"
 trash = "./.Trash/"
 
-class TwoNotes(QtGui.QMainWindow, TwoNotes.ui_MainWindow):
+class TwoNotes(QtGui.QMainWindow, TwoNotes.Ui_TwoNotes):
 	def __init__(self, parent=None):
 		super(TwoNotes, self).__init__(parent)
 		self.setupUi(self)
