@@ -74,7 +74,7 @@ class Ui_TwoNotes(object):
         QtCore.QMetaObject.connectSlotsByName(TwoNotes)
 
     def retranslateUi(self, TwoNotes):
-        TwoNotes.setWindowTitle(_translate("TwoNotes", "MainWindow", None))
+        TwoNotes.setWindowTitle(_translate("TwoNotes", "TwoNotes", None))
         self.Clear.setText(_translate("TwoNotes", "Clear", None))
         self.Save.setText(_translate("TwoNotes", "Save", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Notes), _translate("TwoNotes", "Notes", None))
