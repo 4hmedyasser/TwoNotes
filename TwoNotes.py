@@ -105,6 +105,7 @@ def takeNote():
 
 def listNotes():
     print(os.listdir(path))
+    print(os.path.getmtime(path))
     print("\n")
 
 def viewNote():
