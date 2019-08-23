@@ -9,7 +9,7 @@ path = "./Notes/"
 trash = "./.Trash/"
 
 def onChange():
-    print('F\n')
+    print('F')
 
 
 app = QApplication([])
