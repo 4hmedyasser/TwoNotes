@@ -4,7 +4,7 @@ from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QLabel, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5.QtWidgets import QTableView, QGridLayout, QApplication, QMainWindow, QWidget, QTabWidget, QLabel, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
 
 path = "./Notes/"
 trash = "./.Trash/"
@@ -18,14 +18,62 @@ window.setWindowTitle('TwoNotes')
 Notes = QWidget()
 Notes.setObjectName("Notes")
 
+NotesLayout = QGridLayout(Notes)
+NoteTitle = QTextEdit()
+NoteTitle.setText('Title')
+NoteTitle.setMaximumHeight(25)
+NotesLayout.addWidget(NoteTitle)
+Note2B = QPlainTextEdit()
+NotesLayout.addWidget(Note2B)
+CreateButton = QPushButton('Save')
+NotesLayout.addWidget(CreateButton)
+ClearButton = QPushButton('Clear')
+NotesLayout.addWidget(ClearButton)
+
+
+
+
 List = QWidget()
 List.setObjectName("List")
+
+ListLayout = QGridLayout(List)
+NotesListTable = QTableView()
+ListLayout.addWidget(NotesListTable)
+NotePreview = QTextBrowser()
+ListLayout.addWidget(NotePreview)
+EditButton = QPushButton('Edit')
+ListLayout.addWidget(EditButton)
+DeleteButton = QPushButton('Move to Trash')
+ListLayout.addWidget(DeleteButton)
+
 
 Editor = QWidget()
 Editor.setObjectName("Editor")
 
+EditorLayout = QGridLayout(Editor)
+NotesEditorTable = QTableView()
+EditorLayout.addWidget(NotesEditorTable)
+NoteEditor = QPlainTextEdit()
+EditorLayout.addWidget(NoteEditor)
+SaveButton = QPushButton('Save')
+EditorLayout.addWidget(SaveButton)
+UndoButton = QPushButton('Undo')
+EditorLayout.addWidget(UndoButton)
+
 Trash = QWidget()
 Trash.setObjectName("Trash")
+
+TrashLayout = QGridLayout(Trash)
+NotesTrashTable = QTableView()
+TrashLayout.addWidget(NotesTrashTable)
+TrashNotePreview = QTextBrowser()
+TrashLayout.addWidget(TrashNotePreview)
+RestoreButton = QPushButton('Restore')
+TrashLayout.addWidget(RestoreButton)
+PurgeButton = QPushButton('Delete')
+TrashLayout.addWidget(PurgeButton)
+
+
 
 
 tabs.addTab(Notes,'Notes')
