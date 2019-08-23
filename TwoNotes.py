@@ -2,106 +2,93 @@ import os
 import sys
 from datetime import datetime
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QTableView, QGridLayout, QMainWindow, QWidget, QTabWidget, QLabel, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication, QTableView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
 
 path = "./Notes/"
 trash = "./.Trash/"
 
-class TwoNotes(QtGui, QMainWindow):
-    def __init__(self, parent=None):
-        QMainWindow.__init__(self, parent)
-        self.resize(400, 500)
-        self.setWindowTitle('TwoNotes')
-        self.tabs = QTabWidget()
-        self.centralWidget = self.tabs
-        self.tabs.currentChanged.connect(self.onChange)
+def onChange():
+    print('F\n')
 
-        self.Notes = QWidget()
-        self.Notes.setObjectName("Notes")
 
-        self.NotesLayout = QGridLayout(self.Notes)
-        self.NoteTitle = QTextEdit()
-        self.NoteTitle.setText('Title')
-        self.NoteTitle.setMaximumHeight(25)
-        self.NotesLayout.addWidget(self.NoteTitle)
-        self.Note2B = QPlainTextEdit()
-        self.NotesLayout.addWidget(self.Note2B)
-        self.CreateButton = QPushButton('Save')
-        self.NotesLayout.addWidget(self.CreateButton)
-        self.ClearButton = QPushButton('Clear')
-        self.NotesLayout.addWidget(self.ClearButton)
+app = QApplication([])
+window = QMainWindow()
+tabs = QTabWidget()
+tabs.currentChanged.connect(onChange)
 
-        self.List = QWidget()
-        self.List.setObjectName("List")
+window.setWindowTitle('TwoNotes')
 
-        self.ListLayout = QGridLayout(self.List)
+Notes = QWidget()
+Notes.setObjectName("Notes")
 
-        self.NotesListTable = QTableView()
-        self.ListLayout.addWidget(self.NotesListTable)
-
-        self.NotePreview = QTextBrowser()
-        self.ListLayout.addWidget(self.NotePreview)
-
-        self.EditButton = QPushButton('Edit')
-        self.ListLayout.addWidget(self.EditButton)
-
-        self.DeleteButton = QPushButton('Move to Trash')
-        self.ListLayout.addWidget(self.DeleteButton)
+NotesLayout = QGridLayout(Notes)
+NoteTitle = QTextEdit()
+NoteTitle.setText('Title')
+NoteTitle.setMaximumHeight(25)
+NotesLayout.addWidget(NoteTitle)
+Note2B = QPlainTextEdit()
+NotesLayout.addWidget(Note2B)
+CreateButton = QPushButton('Save')
+NotesLayout.addWidget(CreateButton)
+ClearButton = QPushButton('Clear')
+NotesLayout.addWidget(ClearButton)
 
 
 
-        self.Editor = QWidget()
-        self.Editor.setObjectName("Editor")
 
-        self.EditorLayout = QGridLayout(self.Editor)
+List = QWidget()
+List.setObjectName("List")
 
-        self.NotesEditorTable = QTableView()
-        self.EditorLayout.addWidget(self.NotesEditorTable)
-
-        self.NoteEditor = QPlainTextEdit()
-        self.EditorLayout.addWidget(self.NoteEditor)
-
-        self.SaveButton = QPushButton('Save')
-        self.EditorLayout.addWidget(self.SaveButton)
-
-        self.UndoButton = QPushButton('Undo')
-        self.EditorLayout.addWidget(self.UndoButton)
+ListLayout = QGridLayout(List)
+NotesListTable = QTableView()
+ListLayout.addWidget(NotesListTable)
+NotePreview = QTextBrowser()
+ListLayout.addWidget(NotePreview)
+EditButton = QPushButton('Edit')
+ListLayout.addWidget(EditButton)
+DeleteButton = QPushButton('Move to Trash')
+ListLayout.addWidget(DeleteButton)
 
 
+Editor = QWidget()
+Editor.setObjectName("Editor")
 
-        self.Trash = QWidget()
-        self.Trash.setObjectName("Trash")
+EditorLayout = QGridLayout(Editor)
+NotesEditorTable = QTableView()
+EditorLayout.addWidget(NotesEditorTable)
+NoteEditor = QPlainTextEdit()
+EditorLayout.addWidget(NoteEditor)
+SaveButton = QPushButton('Save')
+EditorLayout.addWidget(SaveButton)
+UndoButton = QPushButton('Undo')
+EditorLayout.addWidget(UndoButton)
 
-        self.TrashLayout = QGridLayout(self.Trash)
+Trash = QWidget()
+Trash.setObjectName("Trash")
 
-        self.NotesTrashTable = QTableView()
-        self.TrashLayout.addWidget(self.NotesTrashTable)
+TrashLayout = QGridLayout(Trash)
+NotesTrashTable = QTableView()
+TrashLayout.addWidget(NotesTrashTable)
+TrashNotePreview = QTextBrowser()
+TrashLayout.addWidget(TrashNotePreview)
+RestoreButton = QPushButton('Restore')
+TrashLayout.addWidget(RestoreButton)
+PurgeButton = QPushButton('Delete')
+TrashLayout.addWidget(PurgeButton)
 
-        self.TrashNotePreview = QTextBrowser()
-        self.TrashLayout.addWidget(self.TrashNotePreview)
 
-        self.RestoreButton = QPushButton('Restore')
-        self.TrashLayout.addWidget(self.RestoreButton)
 
-        self.PurgeButton = QPushButton('Delete')
-        self.TrashLayout.addWidget(self.PurgeButton)
 
-        self.tabs.addTab(self.Notes,'Notes')
-        self.tabs.addTab(self.List,'List')
-        self.tabs.addTab(self.Editor,'Editor')
-        self.tabs.addTab(self.Trash,'Trash')
+tabs.addTab(Notes,'Notes')
+tabs.addTab(List,'List')
+tabs.addTab(Editor,'Editor')
+tabs.addTab(Trash,'Trash')
+window.setCentralWidget(tabs)
+window.setMinimumSize(480,640)
+window.show()
+sys.exit(app.exec_())
 
-    def onChange(self, i):  # changed!
-        QtGui.QMessageBox.information(self,
-              "Tab Index Changed!",
-              "Current Tab Index: %d" % i)  # changed!
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    window = TwoNotes
-    window.show()
-    sys.exit(app.exec_())
 
 
 def takeNote():
