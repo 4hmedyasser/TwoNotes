@@ -1,23 +1,91 @@
 import os
 import sys
-from datetime import datetime
+import datetime
 
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QTableView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5.QtWidgets import QMessageBox, QApplication, QTableView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+
 
 path = "./Notes/"
 trash = "./.Trash/"
 
-def onChange():
+
+def create_note():
+    if not NoteTitle.toPlainText() or NoteTitle.toPlainText() == 'Title':
+        msg = QMessageBox()
+        msg.setText('Please add a title for your note.')
+        msg.exec()
+    elif not Note2B.toPlainText():
+        msg = QMessageBox()
+        msg.setText('Please add text to your note.')
+        msg.exec()
+    else:
+        title = NoteTitle.toPlainText()
+        note = Note2B.toPlainText()
+        save_this = os.path.join(path, title+".txt")
+        save = open(save_this, "w")
+        save.write(note)
+        save.close()
+        Note2B.clear()
+
+
+def list_notes():
+    print(os.listdir(path))
+    print(os.path.getmtime(path))
+    print("\n")
+
+
+def preview_notes():
+    title = input("Enter Note's Title\n\n>")
+    view_this=os.path.join(path,title+".txt")
+    view = open(view_this, "r")
+    note = view.read()
+    view.close()
+    print(note)
+    print("\n")
+
+
+def edit_notes():
+    choice = input("1-Add to The Note/n/n2-Re-Write The Note\n\n>")
+    title = input("Enter Note's Title\n\n>")
+    if choice == "1" :
+        note = input("Re-Enter Note\n\n>")
+        now = datetime.now()
+        append_this=os.path.join(path,title+".txt")
+        append = open(append_this, "a")
+        append.write("Modification @ ")
+        append.write('%02d:%02d:%02d %02d/%02d/%04d' % (now.hour, now.minute, now.second, now.month, now.day, now.year))
+        append.write("\n"+note+"\n")
+        append.close()
+        print("Note Edited successfully!\n")
+    elif choice == "2" :
+        note = input("Re-Enter Note\n\n>")
+        now = datetime.now()
+        rewrite_this=os.path.join(path,title+".txt")
+        rewrite = open(rewrite_this, "w")
+        rewrite.write(title+"\n")
+        rewrite.write('%02d:%02d:%02d %02d/%02d/%04d' % (now.hour, now.minute, now.second, now.month, now.day, now.year))
+        rewrite.write("\n"+note+"\n")
+        rewrite.close()
+        print("Note Edited successfully!\n")
+
+
+def delete_notes():
+    title=input("Enter Note's Title\n\n>")
+    delete_this=os.path.join(path,title+".txt")
+    os.remove(delete_this)
+    print("Note Removed successfully!\n")
+
+
+def purge_notes():
     print('F')
 
 
 app = QApplication([])
 window = QMainWindow()
-tabs = QTabWidget()
-tabs.currentChanged.connect(onChange)
 
 window.setWindowTitle('TwoNotes')
+
 
 Notes = QWidget()
 Notes.setObjectName("Notes")
@@ -33,8 +101,6 @@ CreateButton = QPushButton('Save')
 NotesLayout.addWidget(CreateButton)
 ClearButton = QPushButton('Clear')
 NotesLayout.addWidget(ClearButton)
-
-
 
 
 List = QWidget()
@@ -78,71 +144,17 @@ PurgeButton = QPushButton('Delete')
 TrashLayout.addWidget(PurgeButton)
 
 
+def on_change():
+    print('F')
 
 
-tabs.addTab(Notes,'Notes')
-tabs.addTab(List,'List')
-tabs.addTab(Editor,'Editor')
-tabs.addTab(Trash,'Trash')
+tabs = QTabWidget()
+tabs.currentChanged.connect(on_change)
+tabs.addTab(Notes, 'Notes')
+tabs.addTab(List, 'List')
+tabs.addTab(Editor, 'Editor')
+tabs.addTab(Trash, 'Trash')
 window.setCentralWidget(tabs)
-window.setMinimumSize(480,640)
+window.setMinimumSize(480, 640)
 window.show()
 sys.exit(app.exec_())
-
-
-
-def takeNote():
-    title = input("Enter Note's Title\n\n>")
-    note = input("Enter Note\n\n>")
-    now = datetime.now()
-    save_this=os.path.join(path,title+".txt")
-    save = open(save_this, "w")
-    save.write(title+"\n")
-    save.write('%02d:%02d:%02d %02d/%02d/%04d' % (now.hour, now.minute, now.second, now.month, now.day, now.year))
-    save.write("\n"+note)
-    save.close()
-    print("Note Saved successfully!\n")
-
-def listNotes():
-    print(os.listdir(path))
-    print(os.path.getmtime(path))
-    print("\n")
-
-def viewNote():
-    title = input("Enter Note's Title\n\n>")
-    view_this=os.path.join(path,title+".txt")
-    view = open(view_this, "r")
-    note = view.read()
-    view.close()
-    print(note)
-    print("\n")
-
-def editNote():
-    choice = input("1-Add to The Note/n/n2-Re-Write The Note\n\n>")
-    title = input("Enter Note's Title\n\n>")
-    if choice == "1" :
-        note = input("Re-Enter Note\n\n>")
-        now = datetime.now()
-        append_this=os.path.join(path,title+".txt")
-        append = open(append_this, "a")
-        append.write("Modification @ ")
-        append.write('%02d:%02d:%02d %02d/%02d/%04d' % (now.hour, now.minute, now.second, now.month, now.day, now.year))
-        append.write("\n"+note+"\n")
-        append.close()
-        print("Note Edited successfully!\n")
-    elif choice == "2" :
-        note = input("Re-Enter Note\n\n>")
-        now = datetime.now()
-        rewrite_this=os.path.join(path,title+".txt")
-        rewrite = open(rewrite_this, "w")
-        rewrite.write(title+"\n")
-        rewrite.write('%02d:%02d:%02d %02d/%02d/%04d' % (now.hour, now.minute, now.second, now.month, now.day, now.year))
-        rewrite.write("\n"+note+"\n")
-        rewrite.close()
-        print("Note Edited successfully!\n")
-
-def removeNote():
-    title=input("Enter Note's Title\n\n>")
-    delete_this=os.path.join(path,title+".txt")
-    os.remove(delete_this)
-    print("Note Removed successfully!\n")
