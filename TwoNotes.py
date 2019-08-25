@@ -2,11 +2,11 @@ import os
 import sys
 
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMessageBox, QApplication, QListView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5.QtWidgets import QMessageBox, QApplication, QListView, QPushButton, QGridLayout, QMainWindow, QWidget, QTabWidget, QTextBrowser, QTextEdit
 
 home = os.path.expanduser("~")
-path = home+"/.TwoNotes/Notes/"
-trash = home+"/.TwoNotes/Trash/"
+path = home+'/.TwoNotes/Notes/'
+trash = home+'/.TwoNotes/Trash/'
 
 
 def create_note():
@@ -21,7 +21,7 @@ def create_note():
     else:
         title = NoteTitle.toPlainText()
         note = Note2B.toPlainText()
-        save_this = os.path.join(path, title+".txt")
+        save_this = os.path.join(path, title)
         save = open(save_this, "w")
         save.write(note)
         save.close()
@@ -82,11 +82,13 @@ NoteTitle = QTextEdit()
 NoteTitle.setText('Title')
 NoteTitle.setMaximumHeight(25)
 NotesLayout.addWidget(NoteTitle)
-Note2B = QPlainTextEdit()
+Note2B = QTextEdit()
 NotesLayout.addWidget(Note2B)
 CreateButton = QPushButton('Save')
+CreateButton.clicked.connect(lambda: on_click(0))
 NotesLayout.addWidget(CreateButton)
 ClearButton = QPushButton('Clear')
+ClearButton.clicked.connect(lambda: on_click(1))
 NotesLayout.addWidget(ClearButton)
 
 
@@ -100,8 +102,10 @@ ListLayout.addWidget(NotesListTable)
 NotePreview = QTextBrowser()
 ListLayout.addWidget(NotePreview)
 EditButton = QPushButton('Edit')
+EditButton.clicked.connect(lambda: on_click(2))
 ListLayout.addWidget(EditButton)
 DeleteButton = QPushButton('Move to Trash')
+DeleteButton.clicked.connect(lambda: on_click(3))
 ListLayout.addWidget(DeleteButton)
 
 
@@ -116,11 +120,13 @@ EditNoteTitle = QTextEdit()
 EditNoteTitle.setText('Title')
 EditNoteTitle.setMaximumHeight(25)
 EditorLayout.addWidget(EditNoteTitle)
-NoteEditor = QPlainTextEdit()
+NoteEditor = QTextEdit()
 EditorLayout.addWidget(NoteEditor)
 SaveButton = QPushButton('Save')
+SaveButton.clicked.connect(lambda: on_click(4))
 EditorLayout.addWidget(SaveButton)
 UndoButton = QPushButton('Undo')
+UndoButton.clicked.connect(lambda: on_click(5))
 EditorLayout.addWidget(UndoButton)
 
 Trash = QWidget()
@@ -133,41 +139,32 @@ TrashLayout.addWidget(NotesTrashTable)
 TrashNotePreview = QTextBrowser()
 TrashLayout.addWidget(TrashNotePreview)
 RestoreButton = QPushButton('Restore')
+RestoreButton.clicked.connect(lambda: on_click(6))
 TrashLayout.addWidget(RestoreButton)
 PurgeButton = QPushButton('Delete')
+PurgeButton.clicked.connect(lambda: on_click(7))
 TrashLayout.addWidget(PurgeButton)
 
 
-################################################################################
-#####
-        # lay = QtWidgets.QVBoxLayout(self)
-        #
-        # self.listView = QtWidgets.QListView()
-        # self.label    = QtWidgets.QLabel("Please Select item in the QListView")
-        # lay.addWidget(self.listView)
-        # lay.addWidget(self.label)
-        #
-        # self.entry = QtGui.QStandardItemModel()
-        # self.listView.setModel(self.entry)
-        #
-        # self.listView.clicked[QtCore.QModelIndex].connect(self.on_clicked)
-        # # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
-        # # on the given model index to get a pointer to the item
-        #
-        # for text in ["Itemname1", "Itemname2", "Itemname3", "Itemname4"]:
-        #     it = QtGui.QStandardItem(text)
-        #     self.entry.appendRow(it)
-        # self.itemOld = QtGui.QStandardItem("text")
-#####
-################################################################################
-
-
 def on_click(index):
-    if index == 1:
-        print('F')
+    if index == 0:
+        create_note()
+    elif index == 1:
+        NoteTitle.setText(None)
+        Note2B.setText(None)
     elif index == 2:
-        print('F')
+        tabs.setCurrentIndex(2)
     elif index == 3:
+        # os.rename( str(path) + 'NewFile', str(trash) + 'NewFile')
+        on_change(1)
+        print('F')
+    elif index == 4:
+        print('F')
+    elif index == 5:
+        print('F')
+    elif index == 6:
+        print('F')
+    elif index == 7:
         print('F')
 
 
@@ -187,6 +184,7 @@ def on_change(index):
         for i in entries:
             item = QtGui.QStandardItem(i)
             model.appendRow(item)
+
     elif index == 3:
         entries = os.listdir(path)
         model = QtGui.QStandardItemModel()
