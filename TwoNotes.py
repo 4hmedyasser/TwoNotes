@@ -1,11 +1,12 @@
 import os
 import sys
 
-from PyQt5.QtWidgets import QMessageBox, QApplication, QListWidget, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QMessageBox, QApplication, QListView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
 
-
-path = "./Notes/"
-trash = "./.Trash/"
+home = os.path.expanduser("~")
+path = home+"/.TwoNotes/Notes/"
+trash = home+"/.TwoNotes/Trash/"
 
 
 def create_note():
@@ -25,10 +26,6 @@ def create_note():
         save.write(note)
         save.close()
         Note2B.clear()
-
-
-def list_notes():
-    on_change(2)
 
 
 def preview_notes():
@@ -97,7 +94,8 @@ List = QWidget()
 List.setObjectName("List")
 
 ListLayout = QGridLayout(List)
-NotesListTable = QListWidget()
+NotesListTable = QListView()
+NotesListTable.setEditTriggers(QListView.NoEditTriggers)
 ListLayout.addWidget(NotesListTable)
 NotePreview = QTextBrowser()
 ListLayout.addWidget(NotePreview)
@@ -111,8 +109,13 @@ Editor = QWidget()
 Editor.setObjectName("Editor")
 
 EditorLayout = QGridLayout(Editor)
-NotesEditorTable = QListWidget()
+NotesEditorTable = QListView()
+NotesEditorTable.setEditTriggers(QListView.NoEditTriggers)
 EditorLayout.addWidget(NotesEditorTable)
+EditNoteTitle = QTextEdit()
+EditNoteTitle.setText('Title')
+EditNoteTitle.setMaximumHeight(25)
+EditorLayout.addWidget(EditNoteTitle)
 NoteEditor = QPlainTextEdit()
 EditorLayout.addWidget(NoteEditor)
 SaveButton = QPushButton('Save')
@@ -124,7 +127,8 @@ Trash = QWidget()
 Trash.setObjectName("Trash")
 
 TrashLayout = QGridLayout(Trash)
-NotesTrashTable = QListWidget()
+NotesTrashTable = QListView()
+NotesTrashTable.setEditTriggers(QListView.NoEditTriggers)
 TrashLayout.addWidget(NotesTrashTable)
 TrashNotePreview = QTextBrowser()
 TrashLayout.addWidget(TrashNotePreview)
@@ -134,13 +138,33 @@ PurgeButton = QPushButton('Delete')
 TrashLayout.addWidget(PurgeButton)
 
 
+def on_click():
+    print('F')
+
+
 def on_change(index):
     if index == 1:
-        print('F')
+        entries = os.listdir(path)
+        model = QtGui.QStandardItemModel()
+        NotesListTable.setModel(model)
+        for i in entries:
+            item = QtGui.QStandardItem(i)
+            model.appendRow(item)
+
     elif index == 2:
-        print('F')
+        entries = os.listdir(path)
+        model = QtGui.QStandardItemModel()
+        NotesEditorTable.setModel(model)
+        for i in entries:
+            item = QtGui.QStandardItem(i)
+            model.appendRow(item)
     elif index == 3:
-        print('F')
+        entries = os.listdir(path)
+        model = QtGui.QStandardItemModel()
+        NotesTrashTable.setModel(model)
+        for i in entries:
+            item = QtGui.QStandardItem(i)
+            model.appendRow(item)
 
 
 tabs = QTabWidget()
