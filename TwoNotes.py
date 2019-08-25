@@ -138,8 +138,37 @@ PurgeButton = QPushButton('Delete')
 TrashLayout.addWidget(PurgeButton)
 
 
-def on_click():
-    print('F')
+################################################################################
+#####
+        # lay = QtWidgets.QVBoxLayout(self)
+        #
+        # self.listView = QtWidgets.QListView()
+        # self.label    = QtWidgets.QLabel("Please Select item in the QListView")
+        # lay.addWidget(self.listView)
+        # lay.addWidget(self.label)
+        #
+        # self.entry = QtGui.QStandardItemModel()
+        # self.listView.setModel(self.entry)
+        #
+        # self.listView.clicked[QtCore.QModelIndex].connect(self.on_clicked)
+        # # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
+        # # on the given model index to get a pointer to the item
+        #
+        # for text in ["Itemname1", "Itemname2", "Itemname3", "Itemname4"]:
+        #     it = QtGui.QStandardItem(text)
+        #     self.entry.appendRow(it)
+        # self.itemOld = QtGui.QStandardItem("text")
+#####
+################################################################################
+
+
+def on_click(index):
+    if index == 1:
+        print('F')
+    elif index == 2:
+        print('F')
+    elif index == 3:
+        print('F')
 
 
 def on_change(index):
