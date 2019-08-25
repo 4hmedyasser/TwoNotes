@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PyQt5.QtWidgets import QMessageBox, QApplication, QListView, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
+from PyQt5.QtWidgets import QMessageBox, QApplication, QListWidget, QGridLayout, QMainWindow, QWidget, QTabWidget, QPushButton, QTextBrowser, QTextEdit, QPlainTextEdit
 
 
 path = "./Notes/"
@@ -97,7 +97,7 @@ List = QWidget()
 List.setObjectName("List")
 
 ListLayout = QGridLayout(List)
-NotesListTable = QListView()
+NotesListTable = QListWidget()
 ListLayout.addWidget(NotesListTable)
 NotePreview = QTextBrowser()
 ListLayout.addWidget(NotePreview)
@@ -111,7 +111,7 @@ Editor = QWidget()
 Editor.setObjectName("Editor")
 
 EditorLayout = QGridLayout(Editor)
-NotesEditorTable = QListView()
+NotesEditorTable = QListWidget()
 EditorLayout.addWidget(NotesEditorTable)
 NoteEditor = QPlainTextEdit()
 EditorLayout.addWidget(NoteEditor)
@@ -124,7 +124,7 @@ Trash = QWidget()
 Trash.setObjectName("Trash")
 
 TrashLayout = QGridLayout(Trash)
-NotesTrashTable = QListView()
+NotesTrashTable = QListWidget()
 TrashLayout.addWidget(NotesTrashTable)
 TrashNotePreview = QTextBrowser()
 TrashLayout.addWidget(TrashNotePreview)
