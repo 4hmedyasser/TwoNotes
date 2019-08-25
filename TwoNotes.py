@@ -28,7 +28,7 @@ def create_note():
         Note2B.clear()
 
 
-def preview_notes():
+def view_notes():
     view_this = os.path.join(path, ".txt")
     view = open(view_this, "r")
     note = view.read()
@@ -57,15 +57,16 @@ def edit_notes():
         print("Note Edited successfully!\n")
 
 
-def delete_notes():
-    title = input("Enter Note's Title\n\n>")
-    delete_this = os.path.join(path, title + ".txt")
-    os.remove(delete_this)
-    print("Note Removed successfully!\n")
+def trash_notes():
+    os.rename(os.path.join(path, 'NewFile', os.path.join(trash, 'NewFile')))
+
+
+def restore_notes():
+    os.rename(os.path.join(trash, 'NewFile', os.path.join(path, 'NewFile')))
 
 
 def purge_notes():
-    print('F')
+    os.remove(os.path.join(trash, 'NewFile'))
 
 
 app = QApplication([])
@@ -155,17 +156,20 @@ def on_click(index):
     elif index == 2:
         tabs.setCurrentIndex(2)
     elif index == 3:
-        # os.rename( str(path) + 'NewFile', str(trash) + 'NewFile')
+        # trash
         on_change(1)
-        print('F')
     elif index == 4:
-        print('F')
+        # save
+        on_change(2)
     elif index == 5:
-        print('F')
+        # undo
+        on_change(2)
     elif index == 6:
-        print('F')
+        # restore
+        on_change(3)
     elif index == 7:
-        print('F')
+        # purge
+        on_change(3)
 
 
 def on_change(index):
