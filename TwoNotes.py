@@ -99,6 +99,11 @@ List.setObjectName("List")
 ListLayout = QGridLayout(List)
 NotesListTable = QListView()
 NotesListTable.setEditTriggers(QListView.NoEditTriggers)
+#
+#
+#
+#
+#
 ListLayout.addWidget(NotesListTable)
 NotePreview = QTextBrowser()
 ListLayout.addWidget(NotePreview)
@@ -116,6 +121,11 @@ Editor.setObjectName("Editor")
 EditorLayout = QGridLayout(Editor)
 NotesEditorTable = QListView()
 NotesEditorTable.setEditTriggers(QListView.NoEditTriggers)
+#
+#
+#
+#
+#
 EditorLayout.addWidget(NotesEditorTable)
 EditNoteTitle = QTextEdit()
 EditNoteTitle.setText('Title')
@@ -136,6 +146,11 @@ Trash.setObjectName("Trash")
 TrashLayout = QGridLayout(Trash)
 NotesTrashTable = QListView()
 NotesTrashTable.setEditTriggers(QListView.NoEditTriggers)
+#
+#
+#
+#
+#
 TrashLayout.addWidget(NotesTrashTable)
 TrashNotePreview = QTextBrowser()
 TrashLayout.addWidget(TrashNotePreview)
@@ -165,6 +180,15 @@ def on_click(index):
         on_change(3)
     elif index == 7:  # purge
         on_change(3)
+
+
+def on_select(tab_index, index):
+    if tab_index == 1:
+        print('F')
+    elif tab_index == 2:
+        print('F')
+    elif tab_index == 3:
+        print('F')
 
 
 def on_change(index):
