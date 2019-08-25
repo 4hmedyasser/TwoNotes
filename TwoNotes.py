@@ -2,7 +2,7 @@ import os
 import sys
 
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMessageBox, QApplication, QListView, QPushButton, QGridLayout, QMainWindow, QWidget, QTabWidget, QTextBrowser, QTextEdit
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QGridLayout, QPushButton, QListView, QTextBrowser, QTextEdit, QMessageBox
 
 home = os.path.expanduser("~")
 path = home+'/.TwoNotes/Notes/'
@@ -148,27 +148,22 @@ TrashLayout.addWidget(PurgeButton)
 
 
 def on_click(index):
-    if index == 0:
+    if index == 0:  # create
         create_note()
-    elif index == 1:
+    elif index == 1:  # clear
         NoteTitle.setText(None)
         Note2B.setText(None)
-    elif index == 2:
+    elif index == 2:  # edit
         tabs.setCurrentIndex(2)
-    elif index == 3:
-        # trash
+    elif index == 3:  # trash
         on_change(1)
-    elif index == 4:
-        # save
+    elif index == 4:  # save
         on_change(2)
-    elif index == 5:
-        # undo
+    elif index == 5:  # undo
         on_change(2)
-    elif index == 6:
-        # restore
+    elif index == 6:  # restore
         on_change(3)
-    elif index == 7:
-        # purge
+    elif index == 7:  # purge
         on_change(3)
 
 
