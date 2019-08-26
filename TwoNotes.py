@@ -71,6 +71,7 @@ def purge_notes():
 
 app = QApplication([])
 window = QMainWindow()
+model = QtGui.QStandardItemModel()
 
 window.setWindowTitle('TwoNotes')
 
@@ -99,11 +100,8 @@ List.setObjectName("List")
 ListLayout = QGridLayout(List)
 NotesListTable = QListView()
 NotesListTable.setEditTriggers(QListView.NoEditTriggers)
-#
-#
-#
-#
-#
+NotesListTable.setModel(model)
+NotesListTable.clicked.connect(lambda: on_select(1))
 ListLayout.addWidget(NotesListTable)
 NotePreview = QTextBrowser()
 ListLayout.addWidget(NotePreview)
@@ -121,14 +119,10 @@ Editor.setObjectName("Editor")
 EditorLayout = QGridLayout(Editor)
 NotesEditorTable = QListView()
 NotesEditorTable.setEditTriggers(QListView.NoEditTriggers)
-#
-#
-#
-#
-#
+NotesEditorTable.setModel(model)
+NotesEditorTable.clicked.connect(lambda: on_select(2))
 EditorLayout.addWidget(NotesEditorTable)
 EditNoteTitle = QTextEdit()
-EditNoteTitle.setText('Title')
 EditNoteTitle.setMaximumHeight(25)
 EditorLayout.addWidget(EditNoteTitle)
 NoteEditor = QTextEdit()
@@ -146,11 +140,8 @@ Trash.setObjectName("Trash")
 TrashLayout = QGridLayout(Trash)
 NotesTrashTable = QListView()
 NotesTrashTable.setEditTriggers(QListView.NoEditTriggers)
-#
-#
-#
-#
-#
+NotesTrashTable.setModel(model)
+NotesTrashTable.clicked.connect(lambda: on_select(3))
 TrashLayout.addWidget(NotesTrashTable)
 TrashNotePreview = QTextBrowser()
 TrashLayout.addWidget(TrashNotePreview)
@@ -182,37 +173,47 @@ def on_click(index):
         on_change(3)
 
 
-def on_select(tab_index, index):
+def on_select(tab_index):
     if tab_index == 1:
-        print('F')
+        note_title = str(NotesListTable.currentIndex().data())
+        reader = open(os.path.join(path, note_title), 'r')
+        entry = reader.read()
+        reader.close()
+        NotePreview.setText(entry)
     elif tab_index == 2:
-        print('F')
+        note_title = str(NotesEditorTable.currentIndex().data())
+        reader = open(os.path.join(path, note_title), 'r')
+        entry = reader.read()
+        reader.close()
+        EditNoteTitle.setText(note_title)
+        NoteEditor.setText(entry)
     elif tab_index == 3:
-        print('F')
+        note_title = str(NotesTrashTable.currentIndex().data())
+        reader = open(os.path.join(trash, note_title), 'r')
+        entry = reader.read()
+        reader.close()
+        TrashNotePreview.setText(entry)
 
 
 def on_change(index):
     if index == 1:
-        entries = os.listdir(path)
-        model = QtGui.QStandardItemModel()
-        NotesListTable.setModel(model)
-        for i in entries:
+        items = os.listdir(path)
+        model.clear()
+        for i in items:
             item = QtGui.QStandardItem(i)
             model.appendRow(item)
 
     elif index == 2:
-        entries = os.listdir(path)
-        model = QtGui.QStandardItemModel()
-        NotesEditorTable.setModel(model)
-        for i in entries:
+        items = os.listdir(path)
+        model.clear()
+        for i in items:
             item = QtGui.QStandardItem(i)
             model.appendRow(item)
 
     elif index == 3:
-        entries = os.listdir(path)
-        model = QtGui.QStandardItemModel()
-        NotesTrashTable.setModel(model)
-        for i in entries:
+        items = os.listdir(path)
+        model.clear()
+        for i in items:
             item = QtGui.QStandardItem(i)
             model.appendRow(item)
 
