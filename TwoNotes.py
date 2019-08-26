@@ -92,7 +92,6 @@ def purge_notes():
 app = QApplication([])
 model = QtGui.QStandardItemModel()
 
-
 Notes = QWidget()
 Notes.setObjectName("Notes")
 
@@ -100,8 +99,10 @@ NotesLayout = QGridLayout(Notes)
 NoteTitle = QTextEdit()
 NoteTitle.setText('Note Title')
 NoteTitle.setMaximumHeight(30)
+NoteTitle.setTabChangesFocus(True)
 NotesLayout.addWidget(NoteTitle)
 Note2B = QTextEdit()
+Note2B.setTabChangesFocus(True)
 NotesLayout.addWidget(Note2B)
 CreateButton = QPushButton('Save')
 CreateButton.clicked.connect(lambda: on_click(0))
@@ -141,8 +142,10 @@ NotesEditorTable.clicked.connect(lambda: on_select(2))
 EditorLayout.addWidget(NotesEditorTable)
 EditNoteTitle = QTextEdit()
 EditNoteTitle.setMaximumHeight(30)
+EditNoteTitle.setTabChangesFocus(True)
 EditorLayout.addWidget(EditNoteTitle)
 NoteEditor = QTextEdit()
+NoteEditor.setTabChangesFocus(True)
 EditorLayout.addWidget(NoteEditor)
 SaveButton = QPushButton('Save')
 SaveButton.clicked.connect(lambda: on_click(4))
@@ -168,11 +171,6 @@ TrashLayout.addWidget(RestoreButton)
 PurgeButton = QPushButton('Delete')
 PurgeButton.clicked.connect(lambda: on_click(7))
 TrashLayout.addWidget(PurgeButton)
-
-
-def on_tab():
-    if event == QtCore.Qt.Key_Tab:
-        print('F')
 
 
 def on_click(index):
