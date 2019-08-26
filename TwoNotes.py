@@ -256,10 +256,9 @@ tabs.addTab(Editor, 'Editor')
 tabs.addTab(Trash, 'Trash')
 
 
-if __name__ == '__main__':
-    window = QMainWindow()
-    window.setCentralWidget(tabs)
-    window.setWindowTitle('TwoNotes')
-    window.setMinimumSize(400, 600)
-    window.show()
-    sys.exit(app.exec_())
+window = QMainWindow()
+window.setCentralWidget(tabs)
+window.setWindowTitle('TwoNotes')
+window.setMinimumSize(400, 600)
+window.show()
+sys.exit(app.exec_())
