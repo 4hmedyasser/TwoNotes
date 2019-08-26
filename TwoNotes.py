@@ -89,11 +89,7 @@ def purge_notes():
 
 
 app = QApplication([])
-window = QMainWindow()
 model = QtGui.QStandardItemModel()
-
-window.setWindowTitle('TwoNotes')
-
 
 Notes = QWidget()
 Notes.setObjectName("Notes")
@@ -258,7 +254,11 @@ tabs.addTab(Notes, 'Notes')
 tabs.addTab(List, 'List')
 tabs.addTab(Editor, 'Editor')
 tabs.addTab(Trash, 'Trash')
+
+
+window = QMainWindow()
 window.setCentralWidget(tabs)
-window.setMinimumSize(480, 640)
+window.setWindowTitle('TwoNotes')
+window.setMinimumSize(400, 600)
 window.show()
 sys.exit(app.exec_())
