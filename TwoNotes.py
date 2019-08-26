@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PyQt5 import QtGui
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTabWidget, QGridLayout, QPushButton, QListView, QTextBrowser, QTextEdit, QMessageBox
 
 home = os.path.expanduser("~")
@@ -27,6 +27,7 @@ def create_notes():
         save = open(save_this, "w")
         save.write(note)
         save.close()
+        NoteTitle.clear()
         Note2B.clear()
 
 
@@ -91,13 +92,14 @@ def purge_notes():
 app = QApplication([])
 model = QtGui.QStandardItemModel()
 
+
 Notes = QWidget()
 Notes.setObjectName("Notes")
 
 NotesLayout = QGridLayout(Notes)
 NoteTitle = QTextEdit()
 NoteTitle.setText('Note Title')
-NoteTitle.setMaximumHeight(25)
+NoteTitle.setMaximumHeight(30)
 NotesLayout.addWidget(NoteTitle)
 Note2B = QTextEdit()
 NotesLayout.addWidget(Note2B)
@@ -138,7 +140,7 @@ NotesEditorTable.setModel(model)
 NotesEditorTable.clicked.connect(lambda: on_select(2))
 EditorLayout.addWidget(NotesEditorTable)
 EditNoteTitle = QTextEdit()
-EditNoteTitle.setMaximumHeight(25)
+EditNoteTitle.setMaximumHeight(30)
 EditorLayout.addWidget(EditNoteTitle)
 NoteEditor = QTextEdit()
 EditorLayout.addWidget(NoteEditor)
@@ -166,6 +168,11 @@ TrashLayout.addWidget(RestoreButton)
 PurgeButton = QPushButton('Delete')
 PurgeButton.clicked.connect(lambda: on_click(7))
 TrashLayout.addWidget(PurgeButton)
+
+
+def on_tab():
+    if event == QtCore.Qt.Key_Tab:
+        print('F')
 
 
 def on_click(index):
@@ -256,9 +263,13 @@ tabs.addTab(Editor, 'Editor')
 tabs.addTab(Trash, 'Trash')
 
 
-window = QMainWindow()
-window.setCentralWidget(tabs)
-window.setWindowTitle('TwoNotes')
-window.setMinimumSize(400, 600)
-window.show()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    if not os.path.exists(path) and not os.path.exists(trash):
+        os.makedirs(path)
+        os.makedirs(trash)
+    window = QMainWindow()
+    window.setCentralWidget(tabs)
+    window.setWindowTitle('TwoNotes')
+    window.setMinimumSize(400, 600)
+    window.show()
+    sys.exit(app.exec_())
