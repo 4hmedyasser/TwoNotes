@@ -9,14 +9,16 @@ path = home+'/.TwoNotes/Notes/'
 trash = home+'/.TwoNotes/Trash/'
 
 
-def create_note():
-    if not NoteTitle.toPlainText() or NoteTitle.toPlainText() == 'Title':
+def create_notes():
+    if not NoteTitle.toPlainText():
         msg = QMessageBox()
         msg.setText('Please add a title for your note.')
+        msg.setInformativeText('Note must have a title.')
         msg.exec()
     elif not Note2B.toPlainText():
         msg = QMessageBox()
         msg.setText('Please add text to your note.')
+        msg.setInformativeText('Note can not be empty')
         msg.exec()
     else:
         title = NoteTitle.toPlainText()
@@ -28,45 +30,62 @@ def create_note():
         Note2B.clear()
 
 
-def view_notes():
-    view_this = os.path.join(path, ".txt")
-    view = open(view_this, "r")
-    note = view.read()
-    view.close()
-    print(note)
-    print("\n")
-
-
-def edit_notes():
-    choice = input("1-Add to The Note/n/n2-Re-Write The Note\n\n>")
-    title = input("Enter Note's Title\n\n>")
-    if choice == "1":
-        note = input("Re-Enter Note\n\n>")
-        append_this = os.path.join(path, title+".txt")
-        append = open(append_this, "a")
-        append.write("\n"+note+"\n")
-        append.close()
-        print("Note Edited successfully!\n")
-    elif choice == "2":
-        note = input("Re-Enter Note\n\n>")
-        rewrite_this = os.path.join(path, title+".txt")
-        rewrite = open(rewrite_this, "w")
-        rewrite.write(title+"\n")
-        rewrite.write("\n"+note+"\n")
-        rewrite.close()
-        print("Note Edited successfully!\n")
+def edit_notes(note_title, entry):
+    if EditNoteTitle.toPlainText() == note_title and NoteEditor.toPlainText() == entry:
+        msg = QMessageBox()
+        msg.setText('No changes were done.')
+        msg.setInformativeText('Change note text in order to edit it.')
+        msg.exec()
+    elif EditNoteTitle.toPlainText() == note_title and NoteEditor.toPlainText() != entry:
+        title = EditNoteTitle.toPlainText()
+        note = NoteEditor.toPlainText()
+        save_this = os.path.join(path, title)
+        save = open(save_this, "w")
+        save.write(note)
+        save.close()
+        EditNoteTitle.clear()
+        NoteEditor.clear()
+    else:
+        os.remove(os.path.join(path, note_title))
+        title = EditNoteTitle.toPlainText()
+        note = NoteEditor.toPlainText()
+        save_this = os.path.join(path, title)
+        save = open(save_this, "w")
+        save.write(note)
+        save.close()
+        EditNoteTitle.clear()
+        NoteEditor.clear()
+    on_change(2)
 
 
 def trash_notes():
-    os.rename(os.path.join(path, 'NewFile', os.path.join(trash, 'NewFile')))
+    note_title = str(NotesListTable.currentIndex().data())
+    if not note_title == 'None':
+        os.rename(os.path.join(path, note_title), os.path.join(trash, note_title))
+        NotePreview.setText(None)
+        on_change(3)
 
 
 def restore_notes():
-    os.rename(os.path.join(trash, 'NewFile', os.path.join(path, 'NewFile')))
+    note_title = str(NotesTrashTable.currentIndex().data())
+    if not note_title == 'None':
+        os.rename(os.path.join(trash, note_title), os.path.join(path, note_title))
+        TrashNotePreview.setText(None)
+        on_change(3)
 
 
 def purge_notes():
-    os.remove(os.path.join(trash, 'NewFile'))
+    note_title = str(NotesTrashTable.currentIndex().data())
+    if not note_title == 'None':
+        msg = QMessageBox()
+        msg.setText('Are you sure you want to permanently delete this note?')
+        msg.setInformativeText('The deleted note won\'t be able to be restored.')
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        ret = msg.exec()
+        if ret == QMessageBox.Yes:
+            os.remove(os.path.join(trash, note_title))
+            TrashNotePreview.setText(None)
+            on_change(3)
 
 
 app = QApplication([])
@@ -81,7 +100,7 @@ Notes.setObjectName("Notes")
 
 NotesLayout = QGridLayout(Notes)
 NoteTitle = QTextEdit()
-NoteTitle.setText('Title')
+NoteTitle.setText('Note Title')
 NoteTitle.setMaximumHeight(25)
 NotesLayout.addWidget(NoteTitle)
 Note2B = QTextEdit()
@@ -154,22 +173,37 @@ TrashLayout.addWidget(PurgeButton)
 
 
 def on_click(index):
+    clicked = False
     if index == 0:  # create
-        create_note()
+        create_notes()
     elif index == 1:  # clear
         NoteTitle.setText(None)
         Note2B.setText(None)
     elif index == 2:  # edit
         tabs.setCurrentIndex(2)
     elif index == 3:  # trash
+        trash_notes()
         on_change(1)
     elif index == 4:  # save
-        on_change(2)
+        clicked = True
+        note_title = str(NotesEditorTable.currentIndex().data())
+        reader = open(os.path.join(path, note_title), 'r')
+        entry = reader.read()
+        reader.close()
+        edit_notes(note_title, entry)
     elif index == 5:  # undo
-        on_change(2)
+        if not clicked:
+            note_title = str(NotesEditorTable.currentIndex().data())
+            reader = open(os.path.join(path, note_title), 'r')
+            entry = reader.read()
+            reader.close()
+        EditNoteTitle.setText(note_title)
+        NoteEditor.setText(entry)
     elif index == 6:  # restore
+        restore_notes()
         on_change(3)
     elif index == 7:  # purge
+        purge_notes()
         on_change(3)
 
 
@@ -211,7 +245,7 @@ def on_change(index):
             model.appendRow(item)
 
     elif index == 3:
-        items = os.listdir(path)
+        items = os.listdir(trash)
         model.clear()
         for i in items:
             item = QtGui.QStandardItem(i)
